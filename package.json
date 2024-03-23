@@ -1,0 +1,22 @@
+{
+  "name": "web_aut_davis_medins_final_task",
+  "version": "1.0.0",
+  "description": "QA Automation course final task",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmlv91/WEB_AUT_DAVIS_MEDINS_FINAL_TASK.git"
+  },
+  "author": "Davis Medins",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dmlv91/WEB_AUT_DAVIS_MEDINS_FINAL_TASK/issues"
+  },
+  "homepage": "https://github.com/dmlv91/WEB_AUT_DAVIS_MEDINS_FINAL_TASK#readme",
+  "dependencies": {
+    "cypress": "^13.7.1"
+  }
+}
