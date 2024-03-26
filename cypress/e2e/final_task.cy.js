@@ -24,7 +24,7 @@ describe ('Practice Form', () => {
                 State: "NCR",
                 City: "Delhi"
             }
-
+            /////ACTIONS\\\\\
             PracticeForm.nameField.type(testData.Name);
             PracticeForm.lastNameField.type(testData.LastName);
             PracticeForm.emailField.type(testData.email);
@@ -49,8 +49,46 @@ describe ('Practice Form', () => {
                         
                     }
                 })
-            })
+            });
+            PracticeForm.subjectsField.click();
+            PracticeForm.subjectsField.type(testData.Subjects).then( () => {
+                PracticeForm.subjectsAutocomplete.invoke('text').then((text) => {
+                    if (PracticeForm.subjectsAutocomplete.should('exist') && (text == testData.Subjects)) {
+                        PracticeForm.subjectsAutocomplete.click();
+                    }
+                });
+                
+            });
+            PracticeForm.hobbieSelector.within(() => {
+                cy.get('div').each(($div) => {
+                    if ($div.text() == testData.Hobbies) {
+                        cy.get($div).click();
+                    }
+                });
+            });
+            cy.fixture('/files/samplePicture.png',null).as('file');
+            PracticeForm.uploadBtn.selectFile('@file');
+            PracticeForm.stateSelector.click();
+            PracticeForm.stateSelector.within(() => {
+                cy.get('div').each(($div) => {
+                    if ($div.text() == testData.State) {
+                        cy.get($div).click();
+                        return false; 
+                    }
+                })
+            });
+            PracticeForm.citySelector.click();
+            PracticeForm.citySelector.within(() => {
+                cy.get('div').each(($div) => {
+                    if ($div.text() == testData.City) {
+                        cy.get($div).click();
+                        return false; 
+                    }
+                })
+            });
+            PracticeForm.submitBtn.click();
 
+            /////VALIDATION\\\\\
 
         })
     });

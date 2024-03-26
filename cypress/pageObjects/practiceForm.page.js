@@ -39,7 +39,38 @@ class PracticeForm {
     static get calendarYear() {
         return cy.get("select.react-datepicker__year-select");
     }
+    
+    static get subjectsField() {
+        return cy.get("div#subjectsContainer");
+    }
 
+    static get subjectsAutocomplete() {
+        return cy.get("div.subjects-auto-complete__option--is-focused");
+    }
+
+    static get hobbieSelector() {
+        return cy.get("div#hobbiesWrapper");
+    }
+
+    static get uploadBtn() {
+        return cy.get("input#uploadPicture");
+    }
+
+    static get addressField() {
+        return cy.get("textarea#currentAddress");
+    }
+
+    static get stateSelector() {
+        return cy.get("div#state");
+    }
+
+    static get citySelector() {
+        return cy.get("div#city");
+    }
+
+    static get submitBtn() {
+        return cy.get("button#submit");
+    }
 }
 
 export default PracticeForm
