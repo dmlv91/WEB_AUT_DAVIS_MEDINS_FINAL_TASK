@@ -71,6 +71,14 @@ class PracticeForm {
     static get submitBtn() {
         return cy.get("button#submit");
     }
+
+    static get validationModal() {
+        return cy.get("div.modal-content");
+    }
+
+    static get validationTable() {
+        return cy.get("table.table-hover");
+    }
 }
 
 export default PracticeForm

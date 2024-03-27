@@ -11,10 +11,10 @@ describe ('Practice Form', () => {
             const testData = {
                 Name: "Davis",
                 LastName: "Medins",
-                email: "davis.medins@va.lv",
-                gender: "Male",
-                mobile: "1234567890",
-                DoB: {
+                Student_Email: "davis.medins@va.lv",
+                Gender: "Male",
+                Mobile: "1234567890",
+                Date_of_Birth: {
                     year: "1930",
                     month: "February",
                     day: "28"
@@ -22,27 +22,29 @@ describe ('Practice Form', () => {
                 Subjects: "Economics",
                 Hobbies: "Music",
                 State: "NCR",
-                City: "Delhi"
+                City: "Delhi",
+                Picture: "samplePicture.png",
+                Address: ""
             }
             /////ACTIONS\\\\\
             PracticeForm.nameField.type(testData.Name);
             PracticeForm.lastNameField.type(testData.LastName);
-            PracticeForm.emailField.type(testData.email);
+            PracticeForm.emailField.type(testData.Student_Email);
             PracticeForm.genderSelector.within(() => {
                 cy.get('div').each(($div) => {
-                    if ($div.text() == testData.gender) {
+                    if ($div.text() == testData.Gender) {
                         cy.get($div).click();
                     }
                 });
             });
-            PracticeForm.mobileField.type(testData.mobile);
+            PracticeForm.mobileField.type(testData.Mobile);
             PracticeForm.dobField.click();
-            PracticeForm.calendarMonth.select(testData.DoB.month);
-            PracticeForm.calendarYear.select(testData.DoB.year);
+            PracticeForm.calendarMonth.select(testData.Date_of_Birth.month);
+            PracticeForm.calendarYear.select(testData.Date_of_Birth.year);
             PracticeForm.calendarDate.within(() => {
                 cy.get('div').each(($div) => {
-                    if ($div.text() == testData.DoB.day) {
-                        if($div.attr('aria-label').includes(testData.DoB.month)){
+                    if ($div.text() == testData.Date_of_Birth.day) {
+                        if($div.attr('aria-label').includes(testData.Date_of_Birth.month)){
                             cy.get($div).click();
                             return false;
                         }
@@ -66,7 +68,7 @@ describe ('Practice Form', () => {
                     }
                 });
             });
-            cy.fixture('/files/samplePicture.png',null).as('file');
+            cy.fixture('/files/'+testData.Picture,null).as('file');
             PracticeForm.uploadBtn.selectFile('@file');
             PracticeForm.stateSelector.click();
             PracticeForm.stateSelector.within(() => {
@@ -89,7 +91,40 @@ describe ('Practice Form', () => {
             PracticeForm.submitBtn.click();
 
             /////VALIDATION\\\\\
+            PracticeForm.validationModal.should('exist');
+            PracticeForm.validationTable.within(() => {
+                cy.get('tbody').then(() => {
+                    cy.get('td').each(($td) => {
+                        const key = $td.text().trim();
+                        var expectedValue;
 
+                        if (testData.hasOwnProperty(key)) {
+                            expectedValue = testData[key];
+                            cy.get($td).next('td').should('have.text',expectedValue)
+                        } else {
+                            switch (key) {
+                                case 'Student Name':
+                                    expectedValue = testData.Name + " " + testData.LastName;
+                                    cy.get($td).next('td').should('have.text',expectedValue)
+                                    break;
+                                case 'Student Email':
+                                    expectedValue = testData.Student_Email
+                                    cy.get($td).next('td').should('have.text',expectedValue)
+                                    break;
+                                case 'Date of Birth':
+                                    expectedValue = testData.Date_of_Birth.day + " " + testData.Date_of_Birth.month + "," + testData.Date_of_Birth.year;
+                                    cy.get($td).next('td').should('have.text',expectedValue)
+                                    break;
+                                case 'State and City':
+                                    expectedValue = testData.State + " " + testData.City;
+                                    cy.get($td).next('td').should('have.text',expectedValue)
+                                    break;
+                            }
+                        }
+                        
+                    })
+                })
+            });
         })
     });
 });
