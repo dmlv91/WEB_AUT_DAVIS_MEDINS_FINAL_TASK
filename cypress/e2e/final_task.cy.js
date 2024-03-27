@@ -24,7 +24,7 @@ describe ('Practice Form', () => {
                 State: "NCR",
                 City: "Delhi",
                 Picture: "samplePicture.png",
-                Address: ""
+                Address: "Test street 1"
             }
             /////ACTIONS\\\\\
             PracticeForm.nameField.type(testData.Name);
@@ -70,6 +70,7 @@ describe ('Practice Form', () => {
             });
             cy.fixture('/files/'+testData.Picture,null).as('file');
             PracticeForm.uploadBtn.selectFile('@file');
+            PracticeForm.addressField.type(testData.Address);
             PracticeForm.stateSelector.click();
             PracticeForm.stateSelector.within(() => {
                 cy.get('div').each(($div) => {
